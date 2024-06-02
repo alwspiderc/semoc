@@ -1,4 +1,4 @@
-package br.com.ucsal.semoc.ui.notifications
+package br.com.ucsal.semoc.ui.minicourse
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import br.com.ucsal.semoc.databinding.FragmentNotificationsBinding
+import br.com.ucsal.semoc.databinding.FragmentMinicourseBinding
 
-class NotificationsFragment : Fragment() {
+class minicourseFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentMinicourseBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        val minicourseViewModel =
+            ViewModelProvider(this).get(minicourseViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentMinicourseBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textMinicourse
+        minicourseViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

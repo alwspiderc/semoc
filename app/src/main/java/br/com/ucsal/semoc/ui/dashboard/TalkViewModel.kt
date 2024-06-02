@@ -1,13 +1,13 @@
-package br.com.ucsal.semoc.ui.notifications
+package br.com.ucsal.semoc.ui.talk
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class talkViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is talk Fragment"
     }
     val text: LiveData<String> = _text
 }
