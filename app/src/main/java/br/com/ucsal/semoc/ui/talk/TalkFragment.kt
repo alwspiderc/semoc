@@ -1,5 +1,6 @@
 package br.com.ucsal.semoc.ui.talk
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import br.com.ucsal.semoc.databinding.FragmentTalkBinding
 import br.com.ucsal.semoc.model.Talk
 import br.com.ucsal.semoc.repository.TalkRepository
 import br.com.ucsal.semoc.ui.activity.recyclerview.adapter.ListTalkAdapter
+import br.com.ucsal.semoc.ui.activity.recyclerview.adapter.OnTalkClickListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,9 +36,16 @@ class TalkFragment : Fragment() {
         val talkRepository = TalkRepository()
         talkRepository.getTalks().enqueue(object : Callback<List<Talk>> {
             override fun onResponse(call: Call<List<Talk>>, response: Response<List<Talk>>) {
-                println("Response: ${response.body()}")
                 response.body()?.let {
-                    val viewAdapter = ListTalkAdapter(requireContext(), it)
+                    val viewAdapter = ListTalkAdapter(requireContext(), it, object :
+                        OnTalkClickListener {
+                        override fun onTalkClick(talk: Talk) {
+                            // Iniciando e passando dados da talk para a nova Activity
+                            val intent = Intent(context, TalkDetailActivity::class.java)
+                            intent.putExtra("talk", talk)
+                            startActivity(intent)
+                        }
+                    })
                     recyclerView.adapter = viewAdapter
                 }
             }

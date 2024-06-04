@@ -9,9 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.ucsal.semoc.R
 import br.com.ucsal.semoc.model.Talk
 
+interface OnTalkClickListener {
+    fun onTalkClick(talk: Talk)
+}
+
 class ListTalkAdapter(
     private val context: Context,
-    private val talks: List<Talk>
+    private val talks: List<Talk>,
+    private val listener: OnTalkClickListener
 ) : RecyclerView.Adapter<ListTalkAdapter.ViewHolder>(
 ) {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -36,5 +41,7 @@ class ListTalkAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val talk = talks[position]
         holder.bind(talk)
+        holder.itemView.setOnClickListener { listener.onTalkClick(talk) }
     }
+
 }

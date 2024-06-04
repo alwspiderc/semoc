@@ -5,16 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<!--    <TextView-->
-<!--        android:id="@+id/produto_item_nome"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:text="Salada de frutas" />-->
-
     <TextView
         android:id="@+id/title_talk"
         android:layout_width="0dp"
@@ -36,17 +26,6 @@
         app:layout_constraintTop_toBottomOf="@id/title_talk"
         tools:text="10/10/2023" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/produto_item_descricao"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/produto_item_nome"-->
-<!--        tools:text="Laranja, manga e uva" />-->
-
     <TextView
         android:id="@+id/time_talk"
         android:layout_width="0dp"
@@ -57,17 +36,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/date_talk"
         tools:text="11:50" />
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/produto_item_valor"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/produto_item_descricao"-->
-<!--        tools:text="19.99" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
