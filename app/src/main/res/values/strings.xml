@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">semoc</string>
     <string name="title_home">Home</string>
+    <string name="description_logo_ucsal">Logo da UCSAL</string>
     <string name="title_talk">Palestras</string>
     <string name="title_minicourse">Minicursos</string>
 </resources>
