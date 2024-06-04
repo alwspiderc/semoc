@@ -15,16 +15,16 @@ class ListTalkAdapter(
 ) : RecyclerView.Adapter<ListTalkAdapter.ViewHolder>(
 ) {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         fun bind(talk: Talk) {
-            val nome = itemView.findViewById<TextView>(R.id.produto_item_nome)
-            nome.text = talk.nome
-            val descricao = itemView.findViewById<TextView>(R.id.produto_item_descricao)
-            descricao.text = talk.descricao
-
+            val title = itemView.findViewById<TextView>(R.id.title_talk)
+            title.text = talk.nome
+            val data = itemView.findViewById<TextView>(R.id.date_talk)
+            data.text = talk.data
+            val time = itemView.findViewById<TextView>(R.id.time_talk)
+            time.text = talk.hora
         }
-
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.talk_item, parent, false)
@@ -33,15 +33,8 @@ class ListTalkAdapter(
 
     override fun getItemCount(): Int  = talks.size
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val talk = talks[position]
         holder.bind(talk)
     }
-
-//    fun update(talks: List<Talk>) {
-//        this.talks.clear()
-//        this.talks.addAll(talks)
-//        notifyDataSetChanged()
-//    }
 }
