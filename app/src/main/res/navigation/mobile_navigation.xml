@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="br.com.ucsal.semoc.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label=""
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_talk"
-        android:name="br.com.ucsal.semoc.ui.talk.talkFragment"
+        android:name="br.com.ucsal.semoc.ui.talk.TalkFragment"
         android:label="@string/title_talk"
         tools:layout="@layout/fragment_talk" />
 
