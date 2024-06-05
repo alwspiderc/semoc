@@ -4,18 +4,18 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 fun String.formatDateInBrazilianFormat(): String {
-    val dateWithSlashes = addSlashesToDate(this)
-
     val originalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     val targetFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
-    val date = originalFormat.parse(dateWithSlashes)
+    val date = originalFormat.parse(this)
     return targetFormat.format(date).toString()
 }
 
 fun String.formatDateInUSFormat(): String {
+    val dateWithSlashes = addSlashesToDate(this)
+
     val originalFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
     val targetFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    val dateObj = originalFormat.parse(this)
+    val dateObj = originalFormat.parse(dateWithSlashes)
     return  targetFormat.format(dateObj).toString()
 }
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.ucsal.semoc.databinding.FragmentTalkBinding
@@ -25,9 +26,7 @@ class TalkFragment : Fragment() {
 
     private var _binding: FragmentTalkBinding? = null
     private val binding get() = _binding!!
-    private var talks: List<Talk> = listOf()
-    private lateinit var recyclerView: RecyclerView
-
+    private lateinit var talkViewModel: TalkViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,34 +36,28 @@ class TalkFragment : Fragment() {
         _binding = FragmentTalkBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        recyclerView = binding.activityListTalkRecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        talkViewModel = ViewModelProvider(this).get(TalkViewModel::class.java)
 
-        val talkRepository = TalkRepository()
-        talkRepository.getTalks().enqueue(object : Callback<List<Talk>> {
-            override fun onResponse(call: Call<List<Talk>>, response: Response<List<Talk>>) {
-                response.body()?.let {
-                    talks = it
-                    val viewAdapter = ListTalkAdapter(requireContext(), it, object :
-                        OnTalkClickListener {
-                        override fun onTalkClick(talk: Talk) {
-                            val intent = Intent(context, TalkDetailActivity::class.java)
-                            intent.putExtra("talk", talk)
-                            startActivity(intent)
-                        }
-                    })
-                    recyclerView.adapter = viewAdapter
-                }
-            }
+        setupRecyclerView()
+        setupSearchView()
 
-            override fun onFailure(call: Call<List<Talk>>, t: Throwable) {
-                // no caso de falha, podemos exibir uma mensagem de erro
+//        talkViewModel.getTalks().observe(viewLifecycleOwner, { talks ->
+//            updateRecyclerView(talks)
+//        })
 
-            }
-        })
+        talkViewModel.talks.observe(viewLifecycleOwner) { talks ->
+            updateRecyclerView(talks)
+        }
 
-        val searchView = binding.searchFragmentTalk
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        return root
+    }
+
+    private fun setupRecyclerView() {
+        binding.activityListTalkRecyclerView.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun setupSearchView() {
+        binding.searchFragmentTalk.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -72,32 +65,24 @@ class TalkFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null) {
                     if (newText.isEmpty()) {
-                        val viewAdapter = ListTalkAdapter(requireContext(), talks, object :
-                            OnTalkClickListener {
-                            override fun onTalkClick(talk: Talk) {
-                                val intent = Intent(context, TalkDetailActivity::class.java)
-                                intent.putExtra("talk", talk)
-                                startActivity(intent)
-                            }
-                        })
-                        recyclerView.adapter = viewAdapter
+                        talkViewModel.resetTalks()
                     } else {
                         if (newText.trim().length == 8 || newText.trim().length == 10) {
-                            filterTalksByDate(newText)
+                            talkViewModel.filterTalksByDate(newText)
                         }
+
+//                        if (newText.trim().matches("\\d{2}/\\d{2}/\\d{4}".toRegex())) {
+//                            talkViewModel.filterTalksByDate(newText)
+//                        }
                     }
                 }
                 return false
             }
         })
-
-        return root
     }
 
-    private fun filterTalksByDate(date: String) {
-
-        val filteredTalks = talks.filter { it.data == date.formatDateInUSFormat() }
-        val viewAdapter = ListTalkAdapter(requireContext(), filteredTalks, object :
+    private fun updateRecyclerView(talks: List<Talk>) {
+        val viewAdapter = ListTalkAdapter(requireContext(), talks, object :
             OnTalkClickListener {
             override fun onTalkClick(talk: Talk) {
                 val intent = Intent(context, TalkDetailActivity::class.java)
@@ -105,7 +90,7 @@ class TalkFragment : Fragment() {
                 startActivity(intent)
             }
         })
-        recyclerView.adapter = viewAdapter
+        binding.activityListTalkRecyclerView.adapter = viewAdapter
     }
 
     override fun onDestroyView() {
@@ -113,4 +98,3 @@ class TalkFragment : Fragment() {
         _binding = null
     }
 }
-
