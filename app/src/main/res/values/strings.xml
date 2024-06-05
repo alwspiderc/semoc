@@ -7,4 +7,5 @@
     <string name="title_activity_minicourse_detail">MinicourseDetailActivity</string>
     <string name="title_button_search">Buscar</string>
     <string name="title_TextInputEditText_search">Data</string>
+    <string name="title_button_subscribe">Inscrever-se</string>
 </resources>

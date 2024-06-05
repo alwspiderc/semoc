@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import android.widget.ImageView
 import android.widget.TextView
 import br.com.ucsal.semoc.R
 import br.com.ucsal.semoc.model.Minicourse
@@ -57,5 +58,11 @@ class MinicourseDetailActivity: Activity() {
         val format = SpannableStringBuilder("Formato: ${minicourse.formato}")
         format.setSpan(boldSpan, 0, 7, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         formatTextView.text = format
+
+
+        val backButton = findViewById<ImageView>(R.id.back_button_minicourse_detail)
+        backButton.setOnClickListener {
+            finish()
+        }
     }
 }
