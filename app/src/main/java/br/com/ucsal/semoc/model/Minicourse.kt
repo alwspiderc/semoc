@@ -1,5 +1,7 @@
 package br.com.ucsal.semoc.model
 
+import java.io.Serializable
+
 data class Minicourse(
     val id: Int,
     val nome: String,
@@ -11,4 +13,4 @@ data class Minicourse(
     val tema: String,
     val nivel: String,
     val formato: String
-)
+): Serializable

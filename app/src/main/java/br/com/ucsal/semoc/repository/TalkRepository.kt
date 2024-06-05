@@ -1,17 +1,19 @@
 package br.com.ucsal.semoc.repository
 
+import br.com.ucsal.semoc.api.RetrofitInstance
+import br.com.ucsal.semoc.api.TalkService
 import br.com.ucsal.semoc.model.Talk
 import retrofit2.Call
 
 class TalkRepository {
-    private val talkApi: TalkApi
+    private val talkService: TalkService
 
     init {
         val retrofit = RetrofitInstance.getRetrofitInstance()
-        talkApi = retrofit.create(TalkApi::class.java)
+        talkService = retrofit.create(TalkService::class.java)
     }
 
     fun getTalks(): Call<List<Talk>> {
-        return talkApi.getTalks()
+        return talkService.getTalks()
     }
 }

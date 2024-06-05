@@ -4,4 +4,5 @@
     <string name="description_logo_ucsal">Logo da UCSAL</string>
     <string name="title_talk">Palestras</string>
     <string name="title_minicourse">Minicursos</string>
+    <string name="title_activity_minicourse_detail">MinicourseDetailActivity</string>
 </resources>
