@@ -9,6 +9,7 @@ import android.text.style.StyleSpan
 import android.widget.TextView
 import br.com.ucsal.semoc.R
 import br.com.ucsal.semoc.model.Talk
+import br.com.ucsal.semoc.utils.formatDateInBrazilianFormat
 
 class TalkDetailActivity: Activity() {
 
@@ -30,11 +31,10 @@ class TalkDetailActivity: Activity() {
 
         val boldSpan = StyleSpan(Typeface.BOLD)
 
-        val description = SpannableStringBuilder("Descrição: ${talk.descricao}")
-        description.setSpan(boldSpan, 0, 10, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-        descriptionTextView.text = description
 
-        val date = SpannableStringBuilder("Data: ${talk.data}")
+        descriptionTextView.text = talk.descricao
+
+        val date = SpannableStringBuilder("Data: ${talk.data.formatDateInBrazilianFormat()}")
         date.setSpan(boldSpan, 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         dateTextView.text = date
 
@@ -57,6 +57,7 @@ class TalkDetailActivity: Activity() {
         val format = SpannableStringBuilder("Formato: ${talk.formato}")
         format.setSpan(boldSpan, 0, 7, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         formatTextView.text = format
+
 //        speakerTextView.text = "Palestrante: ${talk.palestrante}"
     }
 }

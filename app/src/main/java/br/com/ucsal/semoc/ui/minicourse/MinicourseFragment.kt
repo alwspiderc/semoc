@@ -52,7 +52,7 @@ class MinicourseFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Minicourse>>, t: Throwable) {
-                // Handle failure
+                // no caso de falha, podemos exibir uma mensagem de erro
             }
         })
 
