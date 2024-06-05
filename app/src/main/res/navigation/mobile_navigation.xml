@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_minicourse"
-        android:name="br.com.ucsal.semoc.ui.minicourse.minicourseFragment"
+        android:name="br.com.ucsal.semoc.ui.minicourse.MinicourseFragment"
         android:label="@string/title_minicourse"
         tools:layout="@layout/fragment_minicourse" />
 </navigation>
