@@ -5,4 +5,6 @@
     <string name="title_talk">Palestras</string>
     <string name="title_minicourse">Minicursos</string>
     <string name="title_activity_minicourse_detail">MinicourseDetailActivity</string>
+    <string name="title_button_search">Buscar</string>
+    <string name="title_TextInputEditText_search">Data</string>
 </resources>
