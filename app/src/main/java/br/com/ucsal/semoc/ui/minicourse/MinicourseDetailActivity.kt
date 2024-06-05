@@ -9,6 +9,8 @@ import android.text.style.StyleSpan
 import android.widget.TextView
 import br.com.ucsal.semoc.R
 import br.com.ucsal.semoc.model.Minicourse
+import br.com.ucsal.semoc.utils.formatDateInBrazilianFormat
+
 class MinicourseDetailActivity: Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +27,14 @@ class MinicourseDetailActivity: Activity() {
         val themeTextView = findViewById<TextView>(R.id.theme_minicourse_detail)
         val levelTextView = findViewById<TextView>(R.id.level_minicourse_detail)
         val formatTextView = findViewById<TextView>(R.id.format_minicourse_detail)
-//        val speakerTextView = findViewById<TextView>(R.id.speaker_talk_detail)
 
         val boldSpan = StyleSpan(Typeface.BOLD)
 
-        val description = SpannableStringBuilder("Descrição: ${minicourse.descricao}")
+        val description = SpannableStringBuilder("${minicourse.descricao}")
         description.setSpan(boldSpan, 0, 10, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         descriptionTextView.text = description
 
-        val date = SpannableStringBuilder("Data: ${minicourse.data}")
+        val date = SpannableStringBuilder("Data: ${minicourse.data.formatDateInBrazilianFormat()}")
         date.setSpan(boldSpan, 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         dateTextView.text = date
 
@@ -56,6 +57,5 @@ class MinicourseDetailActivity: Activity() {
         val format = SpannableStringBuilder("Formato: ${minicourse.formato}")
         format.setSpan(boldSpan, 0, 7, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         formatTextView.text = format
-//        speakerTextView.text = "Palestrante: ${talk.palestrante}"
     }
 }

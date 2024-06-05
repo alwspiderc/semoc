@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.ucsal.semoc.R
 import br.com.ucsal.semoc.model.Minicourse
+import br.com.ucsal.semoc.utils.formatDateInBrazilianFormat
 
 interface OnMinicourseClickListener {
     fun onMinicourseClick(minicourse: Minicourse)
@@ -22,9 +23,9 @@ class ListMinicourseAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(minicourse: Minicourse) {
             val title = itemView.findViewById<TextView>(R.id.title_minicourse)
-            title.text = minicourse.nome
+            title.text = minicourse.nome.replace("Minicurso: ", "")
             val data = itemView.findViewById<TextView>(R.id.date_minicourse)
-            data.text = minicourse.data
+            data.text = minicourse.data.formatDateInBrazilianFormat()
             val time = itemView.findViewById<TextView>(R.id.time_minicourse)
             time.text = minicourse.hora
         }

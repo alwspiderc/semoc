@@ -41,9 +41,6 @@ class TalkFragment : Fragment() {
         setupRecyclerView()
         setupSearchView()
 
-//        talkViewModel.getTalks().observe(viewLifecycleOwner, { talks ->
-//            updateRecyclerView(talks)
-//        })
 
         talkViewModel.talks.observe(viewLifecycleOwner) { talks ->
             updateRecyclerView(talks)
@@ -71,9 +68,6 @@ class TalkFragment : Fragment() {
                             talkViewModel.filterTalksByDate(newText)
                         }
 
-//                        if (newText.trim().matches("\\d{2}/\\d{2}/\\d{4}".toRegex())) {
-//                            talkViewModel.filterTalksByDate(newText)
-//                        }
                     }
                 }
                 return false
