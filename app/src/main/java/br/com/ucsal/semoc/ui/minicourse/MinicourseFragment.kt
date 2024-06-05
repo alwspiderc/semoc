@@ -1,20 +1,26 @@
 package br.com.ucsal.semoc.ui.minicourse
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.ucsal.semoc.databinding.FragmentMinicourseBinding
+import br.com.ucsal.semoc.model.Minicourse
+import br.com.ucsal.semoc.repository.MinicourseRepository
+import br.com.ucsal.semoc.ui.activity.recyclerview.adapter.ListMinicourseAdapter
+import br.com.ucsal.semoc.ui.activity.recyclerview.adapter.OnMinicourseClickListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class minicourseFragment : Fragment() {
+class MinicourseFragment : Fragment() {
 
     private var _binding: FragmentMinicourseBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,16 +28,34 @@ class minicourseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val minicourseViewModel =
-            ViewModelProvider(this).get(minicourseViewModel::class.java)
 
         _binding = FragmentMinicourseBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textMinicourse
-        minicourseViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        val recyclerView: RecyclerView = binding.activityListMinicourseRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        val minicourseRepository = MinicourseRepository()
+        minicourseRepository.getMinicourses().enqueue(object : Callback<List<Minicourse>> {
+            override fun onResponse(call: Call<List<Minicourse>>, response: Response<List<Minicourse>>) {
+                response.body()?.let {
+                    val viewAdapter = ListMinicourseAdapter(requireContext(), it, object :
+                        OnMinicourseClickListener {
+                        override fun onMinicourseClick(minicourse: Minicourse) {
+                            val intent = Intent(context, MinicourseDetailActivity::class.java)
+                            intent.putExtra("minicourse", minicourse)
+                            startActivity(intent)
+                        }
+                    })
+                    recyclerView.adapter = viewAdapter
+                }
+            }
+
+            override fun onFailure(call: Call<List<Minicourse>>, t: Throwable) {
+                // Handle failure
+            }
+        })
+
         return root
     }
 
