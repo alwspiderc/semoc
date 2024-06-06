@@ -30,6 +30,8 @@
             </intent-filter>
         </activity> <!-- Add this line -->
         <activity android:name=".ui.talk.TalkDetailActivity" />
+        <activity android:name=".ui.profile.ProfileActivity" />
+
     </application>
 
 </manifest>

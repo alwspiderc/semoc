@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/back_container_minicourse_prifile"
+        android:id="@+id/back_container_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.050000012">
 
         <ImageView
-            android:id="@+id/back_button_minicourse_detail"
+            android:id="@+id/back_button_profile_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/back_text_minicourse_detail"
+            android:id="@+id/back_text_profile_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"

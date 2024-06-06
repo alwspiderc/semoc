@@ -1,5 +1,7 @@
 package br.com.ucsal.semoc.model
 
+import java.io.Serializable
+
 //{
 //    "id": 1,
 //    "nome": "Comit\u00ea Organizador SEMOC",
@@ -14,4 +16,4 @@ data class Profile(
     val bio: String,
     val tipo: String,
     val foto_url: String
-)
+) : Serializable
