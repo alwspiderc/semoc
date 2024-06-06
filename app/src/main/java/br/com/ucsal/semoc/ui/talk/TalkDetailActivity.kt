@@ -9,8 +9,14 @@ import android.text.style.StyleSpan
 import android.widget.ImageView
 import android.widget.TextView
 import br.com.ucsal.semoc.R
+import br.com.ucsal.semoc.api.PrifileService
+import br.com.ucsal.semoc.api.RetrofitInstance
+import br.com.ucsal.semoc.model.Profile
 import br.com.ucsal.semoc.model.Talk
 import br.com.ucsal.semoc.utils.formatDateInBrazilianFormat
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class TalkDetailActivity: Activity() {
 
@@ -21,6 +27,7 @@ class TalkDetailActivity: Activity() {
         val extras = intent.extras
         val talk = extras?.getSerializable("talk") as Talk
 
+
         val descriptionTextView = findViewById<TextView>(R.id.description_talk_detail)
         val dateTextView = findViewById<TextView>(R.id.date_talk_detail)
         val timeTextView = findViewById<TextView>(R.id.time_talk_detail)
@@ -28,7 +35,7 @@ class TalkDetailActivity: Activity() {
         val themeTextView = findViewById<TextView>(R.id.theme_talk_detail)
         val levelTextView = findViewById<TextView>(R.id.level_talk_detail)
         val formatTextView = findViewById<TextView>(R.id.format_talk_detail)
-//        val speakerTextView = findViewById<TextView>(R.id.speaker_talk_detail)
+        val speakerTextView = findViewById<TextView>(R.id.speaker_talk_detail)
 
         val boldSpan = StyleSpan(Typeface.BOLD)
 
@@ -58,6 +65,27 @@ class TalkDetailActivity: Activity() {
         val format = SpannableStringBuilder("Formato: ${talk.formato}")
         format.setSpan(boldSpan, 0, 7, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         formatTextView.text = format
+
+        val retrofit = RetrofitInstance.getRetrofitInstance()
+        val profileService = retrofit.create(PrifileService::class.java)
+
+        profileService.getProfile(talk.palestrante_id).enqueue(object : Callback<Profile> {
+            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                if (response.isSuccessful) {
+                    val speaker = response.body()
+                    val profile = SpannableStringBuilder("Palestrante: ${speaker?.nome}")
+                    profile.setSpan(boldSpan, 0, 11, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                    speakerTextView.text = profile
+                } else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<Profile>, t: Throwable) {
+            }
+        })
+
+
 
 
         val backButton = findViewById<ImageView>(R.id.back_button_talk_detail)

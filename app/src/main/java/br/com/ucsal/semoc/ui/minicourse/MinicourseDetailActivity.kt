@@ -9,8 +9,14 @@ import android.text.style.StyleSpan
 import android.widget.ImageView
 import android.widget.TextView
 import br.com.ucsal.semoc.R
+import br.com.ucsal.semoc.api.PrifileService
+import br.com.ucsal.semoc.api.RetrofitInstance
 import br.com.ucsal.semoc.model.Minicourse
+import br.com.ucsal.semoc.model.Profile
 import br.com.ucsal.semoc.utils.formatDateInBrazilianFormat
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MinicourseDetailActivity: Activity() {
 
@@ -28,12 +34,11 @@ class MinicourseDetailActivity: Activity() {
         val themeTextView = findViewById<TextView>(R.id.theme_minicourse_detail)
         val levelTextView = findViewById<TextView>(R.id.level_minicourse_detail)
         val formatTextView = findViewById<TextView>(R.id.format_minicourse_detail)
+        val speakerTextView = findViewById<TextView>(R.id.speaker_minicourse_detail)
 
         val boldSpan = StyleSpan(Typeface.BOLD)
 
-        val description = SpannableStringBuilder("${minicourse.descricao}")
-        description.setSpan(boldSpan, 0, 10, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-        descriptionTextView.text = description
+        descriptionTextView.text = minicourse.descricao
 
         val date = SpannableStringBuilder("Data: ${minicourse.data.formatDateInBrazilianFormat()}")
         date.setSpan(boldSpan, 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
@@ -59,6 +64,25 @@ class MinicourseDetailActivity: Activity() {
         format.setSpan(boldSpan, 0, 7, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         formatTextView.text = format
 
+
+        val retrofit = RetrofitInstance.getRetrofitInstance()
+        val profileService = retrofit.create(PrifileService::class.java)
+
+        profileService.getProfile(minicourse.instrutor_id).enqueue(object : Callback<Profile> {
+            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                if (response.isSuccessful) {
+                    val speaker = response.body()
+                    val profile = SpannableStringBuilder("Instrutor: ${speaker?.nome}")
+                    profile.setSpan(boldSpan, 0, 11, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                    speakerTextView.text = profile
+                } else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<Profile>, t: Throwable) {
+            }
+        })
 
         val backButton = findViewById<ImageView>(R.id.back_button_minicourse_detail)
         backButton.setOnClickListener {
