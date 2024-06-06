@@ -23,7 +23,7 @@ class ListTalkAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(talk: Talk) {
             val title = itemView.findViewById<TextView>(R.id.title_talk)
-            title.text = talk.nome
+            title.text = talk.nome.replace("Palestra: ", "")
             val data = itemView.findViewById<TextView>(R.id.date_talk)
             data.text = talk.data.formatDateInBrazilianFormat()
             val time = itemView.findViewById<TextView>(R.id.time_talk)

@@ -37,9 +37,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_fragment_talk"
-        app:queryHint="Data"
+        app:queryHint="Pesquisar por data"
         app:searchHintIcon="@null"
-        app:searchIcon="@drawable/ic_baseline_search_24"
+        app:searchIcon="@drawable/baseline_access_time_filled_24"
         />
 
     <androidx.recyclerview.widget.RecyclerView

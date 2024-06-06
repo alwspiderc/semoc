@@ -31,6 +31,7 @@ class MinicourseDetailActivity: Activity() {
         val extras = intent.extras
         val minicourse = extras?.getSerializable("minicourse") as Minicourse
 
+        val titleTextView = findViewById<TextView>(R.id.back_text_minicourse_detail)
         val descriptionTextView = findViewById<TextView>(R.id.description_minicourse_detail)
         val dateTextView = findViewById<TextView>(R.id.date_minicourse_detail)
         val timeTextView = findViewById<TextView>(R.id.time_minicourse_detail)
@@ -43,6 +44,7 @@ class MinicourseDetailActivity: Activity() {
 
         val boldSpan = StyleSpan(Typeface.BOLD)
 
+        titleTextView.text = minicourse.nome.replace("Minicurso: ", "")
         descriptionTextView.text = minicourse.descricao
 
         val date = SpannableStringBuilder("Data: ${minicourse.data.formatDateInBrazilianFormat()}")
