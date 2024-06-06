@@ -28,7 +28,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Add this line -->
+        </activity>
         <activity android:name=".ui.talk.TalkDetailActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />
 

@@ -48,9 +48,6 @@ class TalkDetailActivity: Activity() {
         titleTextView.text = talk.nome.replace("Palestra: ", "")
         descriptionTextView.text = talk.descricao
 
-
-
-
         val date = SpannableStringBuilder("Data: ${talk.data.formatDateInBrazilianFormat()}")
         date.setSpan(boldSpan, 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         dateTextView.text = date
@@ -86,15 +83,11 @@ class TalkDetailActivity: Activity() {
                     profile.setSpan(boldSpan, 0, 11, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                     speakerTextView.text = profile
                 } else {
-                    // Handle the case when the response is not successful
-                    // For example, show a toast message
                     Toast.makeText(this@TalkDetailActivity, "Falha ao tentar carregar perfil do palestrante", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<Profile>, t: Throwable) {
-                // Handle the case when the request fails
-                // For example, show a toast message
                 Toast.makeText(this@TalkDetailActivity, "Erro: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
