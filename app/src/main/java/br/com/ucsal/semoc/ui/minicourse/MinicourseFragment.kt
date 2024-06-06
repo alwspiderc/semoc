@@ -5,24 +5,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.ucsal.semoc.databinding.FragmentMinicourseBinding
 import br.com.ucsal.semoc.model.Minicourse
-import br.com.ucsal.semoc.repository.MinicourseRepository
 import br.com.ucsal.semoc.ui.activity.recyclerview.adapter.ListMinicourseAdapter
 import br.com.ucsal.semoc.ui.activity.recyclerview.adapter.OnMinicourseClickListener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 class MinicourseFragment : Fragment() {
 
     private var _binding: FragmentMinicourseBinding? = null
 
     private val binding get() = _binding!!
-
+    private lateinit var minicourseViewModel: MinicourseViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,31 +30,54 @@ class MinicourseFragment : Fragment() {
         _binding = FragmentMinicourseBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val recyclerView: RecyclerView = binding.activityListMinicourseRecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        minicourseViewModel = ViewModelProvider(this).get(MinicourseViewModel::class.java)
 
-        val minicourseRepository = MinicourseRepository()
-        minicourseRepository.getMinicourses().enqueue(object : Callback<List<Minicourse>> {
-            override fun onResponse(call: Call<List<Minicourse>>, response: Response<List<Minicourse>>) {
-                response.body()?.let {
-                    val viewAdapter = ListMinicourseAdapter(requireContext(), it, object :
-                        OnMinicourseClickListener {
-                        override fun onMinicourseClick(minicourse: Minicourse) {
-                            val intent = Intent(context, MinicourseDetailActivity::class.java)
-                            intent.putExtra("minicourse", minicourse)
-                            startActivity(intent)
-                        }
-                    })
-                    recyclerView.adapter = viewAdapter
-                }
-            }
+        setupRecyclerView()
+        setupSearchView()
 
-            override fun onFailure(call: Call<List<Minicourse>>, t: Throwable) {
-                // Handle failure
-            }
-        })
+        minicourseViewModel.minicourse.observe(viewLifecycleOwner) { minicourse ->
+            updateRecyclerView(minicourse)
+        }
 
         return root
+    }
+    private fun setupRecyclerView() {
+        binding.activityListMinicourseRecyclerView.layoutManager = LinearLayoutManager(context)
+    }
+
+
+    private fun setupSearchView() {
+        binding.searchFragmentMinicourse.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    if (newText.isEmpty()) {
+                        minicourseViewModel.reset()
+                    } else {
+                        if (newText.trim().length == 8 || newText.trim().length == 10) {
+                            minicourseViewModel.filterByDate(newText)
+                        }
+
+                    }
+                }
+                return false
+            }
+        })
+    }
+
+    private fun updateRecyclerView(minicourse: List<Minicourse>) {
+        val viewAdapter = ListMinicourseAdapter(requireContext(), minicourse, object :
+            OnMinicourseClickListener {
+            override fun onMinicourseClick(minicourse: Minicourse) {
+                val intent = Intent(context, MinicourseDetailActivity::class.java)
+                intent.putExtra("minicourse", minicourse)
+                startActivity(intent)
+            }
+        })
+        binding.activityListMinicourseRecyclerView.adapter = viewAdapter
     }
 
     override fun onDestroyView() {

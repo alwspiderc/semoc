@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.ucsal.semoc.R
 import br.com.ucsal.semoc.model.Talk
+import br.com.ucsal.semoc.utils.formatDateInBrazilianFormat
 
 interface OnTalkClickListener {
     fun onTalkClick(talk: Talk)
@@ -24,7 +25,7 @@ class ListTalkAdapter(
             val title = itemView.findViewById<TextView>(R.id.title_talk)
             title.text = talk.nome
             val data = itemView.findViewById<TextView>(R.id.date_talk)
-            data.text = talk.data
+            data.text = talk.data.formatDateInBrazilianFormat()
             val time = itemView.findViewById<TextView>(R.id.time_talk)
             time.text = talk.hora
         }
@@ -44,4 +45,6 @@ class ListTalkAdapter(
         holder.itemView.setOnClickListener { listener.onTalkClick(talk) }
     }
 
+
 }
+
